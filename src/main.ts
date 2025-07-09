@@ -1,6 +1,12 @@
+
 import { createApp } from 'vue'
-import PrimeVue from 'primevue/config';
 import App from './App.vue'
+
+import PrimeVue from 'primevue/config';
+
+import './tailwind.css'
+
+import 'primeicons/primeicons.css'
 import router from './router'
 
 
