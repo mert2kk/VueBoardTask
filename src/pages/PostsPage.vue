@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bg-red-200">
     <PostList />
   </div>
 </template>
