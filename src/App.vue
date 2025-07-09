@@ -1,18 +1,13 @@
 <template>
-  <header>
-    <div class="bg-primary"><router-view /></div>
-    <div class="p-6 bg-gray-100 min-h-screen">
-      <h1 class="text-2xl font-bold text-gray-800 mb-4">
-        Tailwind + PrimeVue Test
-      </h1>
-      <Button label="Submit" class="bg-primary mr-2" />
-      <Button label="Sil" class="p-button-danger" />
-    </div>
-  </header>
+  <div class="flex flex-col items-center">
+    <header>
+      <h1 class="flex flex-col items-center">VueBoard</h1>
+    </header>
 
-  <main></main>
+    <main>
+      <div class="flex flex-col items-center"><router-view /></div>
+    </main>
+  </div>
 </template>
 
-<script setup lang="ts">
-import Button from "primevue/button";
-</script>
+<script setup lang="ts"></script>

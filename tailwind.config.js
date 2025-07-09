@@ -1,4 +1,6 @@
 // tailwind.config.js
+const PrimeUI = require("tailwindcss-primeui");
+
 module.exports = {
   content: [
     "./index.html",
@@ -8,5 +10,5 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [PrimeUI],
 };
