@@ -15,15 +15,12 @@
 <script setup lang="ts">
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
-import { onMounted, computed } from "vue";
-import { useStore } from "@/store/useStore";
-import { Post } from "@/store/posts/types";
+import type { Post } from "@/store/posts/types";
 
-const PostsStore = useStore();
+import { defineProps } from "vue";
 
-onMounted(() => {
-  PostsStore.dispatch("posts/fetchPosts");
-});
-
-const posts = computed<Post[]>(() => PostsStore.state.posts.posts);
+defineProps<{
+  posts: Post[];
+  mode: "view" | "edit";
+}>();
 </script>

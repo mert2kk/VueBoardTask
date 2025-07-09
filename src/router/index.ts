@@ -1,32 +1,20 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 
-import PostsPage from '@/pages/PostsPage.vue'
-import PostDetailsPage from '@/pages/PostDetailsPage.vue'
-import PostEditPage from '@/pages/PostEditPage.vue'
+import Home from '@/pages/home-board.vue'
+import PostsPage from '../pages/posts-page.vue'
+import PostDetails from '@/pages/post-page/post-details.vue'
+import PostEdit from '@/pages/post-page/post-draft.vue'
+
+
 
 const routes: Array<RouteRecordRaw> = [
-    {
-        path: '/',
-        redirect: '/posts'
-    },
-    {
-        path: '/posts',
-        name: 'Posts',
-        component: PostsPage
-    },
-    {
-        path: '/posts/:id',
-        name: 'PostDetails',
-        component: PostDetailsPage,
-        props: true
-    },
-    {
-        path: '/posts/:id/edit',
-        name: 'PostEdit',
-        component: PostEditPage,
-        props: true
-    }
+    { path: '/', component: Home },
+    { path: '/posts', component: PostsPage },
+    { path: '/posts/:id', component: PostDetails },
+    { path: '/posts/:id/edit', component: PostEdit }
+
+
 ]
 
 const router = createRouter({

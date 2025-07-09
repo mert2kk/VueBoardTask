@@ -8,7 +8,7 @@ import { ActionContext } from 'vuex'
 
 const initialState = (): PostsState => ({
     posts: [],
-    post: null
+    post: {} as Post
 })
 
 const state: PostsState = initialState()
@@ -20,6 +20,9 @@ const getters = {
 const mutations = {
     setPosts(state: PostsState, posts: Post[]) {
         state.posts = posts
+    },
+    setPost(state: PostsState, post: Post) {
+        state.post = post
     },
     addPost(state: PostsState, post: Post) {
         state.posts.push(post)
@@ -34,7 +37,13 @@ const actions = {
         } catch (error) {
             console.error('Error while fetching the posts', error)
         }
-        commit('setPosts', state.posts)
+    }, async fetchPost({ commit }: ActionContext<PostsState, RootState>, postId: number) {
+        try {
+            const response = await axios.get<Post[]>(`https://jsonplaceholder.typicode.com/posts/${postId}`)
+            commit('setPost', response.data)
+        } catch (error) {
+            console.error('Error while fetching the posts', error)
+        }
     }
 }
 
