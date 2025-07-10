@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import PostCard from "@/components/PostCard.vue";
-import { Button } from "primevue";
+import { Button, useToast } from "primevue";
 import { useRoute, useRouter } from "vue-router";
 import { computed, onMounted } from "vue";
 import { useStore } from "@/store/useStore";
@@ -23,6 +23,7 @@ import { useStore } from "@/store/useStore";
 const route = useRoute();
 const router = useRouter();
 const PostsStore = useStore();
+const toast = useToast();
 
 const post = computed(() => PostsStore.state.posts.post!);
 const postId = computed(() => route.params.id);
@@ -34,11 +35,18 @@ onMounted(() => {
   PostsStore.dispatch("posts/fetchPost", postId.value);
 });
 
-async function savePost() {
-  PostsStore.dispatch("posts/savePost", post.value);
-}
-
 async function editPost() {
   router.push(`/posts/${postId.value}/edit`);
+}
+
+async function savePost() {
+  try {
+    await PostsStore.dispatch("posts/savePost", post.value);
+    toast.add({ severity: "success", summary: "Saved", life: 2000 });
+    router.push(`/posts/${postId.value}`);
+  } catch (error) {
+    toast.add({ severity: "error", summary: "Save failed", life: 2000 });
+    console.error("Save error", error);
+  }
 }
 </script>

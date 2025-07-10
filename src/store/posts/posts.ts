@@ -56,6 +56,16 @@ const actions = {
         } catch (error) {
             console.error('Error while deleting the post', error)
         }
+    },
+    async savePost({ commit, dispatch }: ActionContext<PostsState, RootState>, post: Post) {
+        try {
+            const response = await axios.put(`https://jsonplaceholder.typicode.com/posts/${post.id}`, post);
+            commit("setPost", response.data);
+            dispatch("fetchPosts");
+        } catch (error) {
+            console.error("Save error", error);
+            throw error;
+        }
     }
 }
 
