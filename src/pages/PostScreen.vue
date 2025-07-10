@@ -1,8 +1,6 @@
 <template>
-  <div class="space-y-4">
-    <PostEditTabs v-model="post" />
-
-    <div class="flex justify-end">
+  <div class="py-4">
+    <div class="flex justify-end py-10">
       <Button
         v-if="isEditMode"
         label="Save"
@@ -11,11 +9,12 @@
       />
       <Button v-else label="Edit" icon="pi pi-pencil" @click="editPost" />
     </div>
+    <PostCard v-model="post" />
   </div>
 </template>
 
 <script setup lang="ts">
-import PostEditTabs from "@/components/PostEditTabs.vue";
+import PostCard from "@/components/PostCard.vue";
 import { Button } from "primevue";
 import { useRoute, useRouter } from "vue-router";
 import { computed, onMounted } from "vue";
