@@ -23,6 +23,7 @@
         placeholder="İçerik"
       />
     </TabPanel>
+    <CommentList :comments="comments" />
   </Tabs>
 </template>
 
@@ -37,8 +38,11 @@ import TabList from "primevue/tablist";
 import Tab from "primevue/tab";
 import TabPanel from "primevue/tabpanel";
 import type { Post } from "@/store/posts/types";
+import type { Comment } from "@/store/comments/types";
+import CommentList from "./CommentList.vue";
 
-const post = defineModel<Post>({ required: true });
+const post = defineModel<Post>("post", { required: true });
+const comments = defineModel<Comment[]>("comments", { required: true });
 
 const route = useRoute();
 const router = useRouter();

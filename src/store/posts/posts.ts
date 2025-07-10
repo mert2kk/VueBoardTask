@@ -43,7 +43,7 @@ const actions = {
         }
     }, async fetchPost({ commit }: ActionContext<PostsState, RootState>, postId: number) {
         try {
-            const response = await axios.get<Post[]>(`https://jsonplaceholder.typicode.com/posts/${postId}`)
+            const response = await axios.get<Post>(`https://jsonplaceholder.typicode.com/posts/${postId}`)
             commit('setPost', response.data)
         } catch (error) {
             console.error('Error while fetching the post', error)
@@ -57,7 +57,7 @@ const actions = {
             console.error('Error while deleting the post', error)
         }
     },
-    async savePost({ commit, dispatch }: ActionContext<PostsState, RootState>, post: Post) {
+    async updatePost({ commit, dispatch }: ActionContext<PostsState, RootState>, post: Post) {
         try {
             const response = await axios.put(`https://jsonplaceholder.typicode.com/posts/${post.id}`, post);
             commit("setPost", response.data);

@@ -16,17 +16,17 @@ import { useRouter } from "vue-router";
 
 import type { Post } from "@/store/posts/types";
 
-const PostsStore = useStore();
+const store = useStore();
 const router = useRouter();
 
 onMounted(() => {
-  PostsStore.dispatch("posts/fetchPosts");
+  store.dispatch("posts/fetchPosts");
 });
 
-const posts = computed<Post[]>(() => PostsStore.state.posts.posts);
+const posts = computed<Post[]>(() => store.state.posts.posts!);
 
 async function createNewPost() {
-  const newPostId = await PostsStore.dispatch("posts/createEmptyPost");
+  const newPostId = await store.dispatch("posts/createEmptyPost");
   router.push(`/posts/${newPostId}/edit`);
 }
 </script>

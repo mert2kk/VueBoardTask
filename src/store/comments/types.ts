@@ -8,4 +8,5 @@ export interface Comment {
 
 export interface CommentsState {
     comments: Comment[]
+    comment: Comment
 }

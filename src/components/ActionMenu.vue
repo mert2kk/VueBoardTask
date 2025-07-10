@@ -23,7 +23,7 @@ import { defineProps, ref } from "vue";
 
 const toast = useToast();
 const router = useRouter();
-const PostsStore = useStore();
+const store = useStore();
 
 const props = defineProps<{
   postId: number;
@@ -40,7 +40,7 @@ const deletePost = () => {
     detail: "Post Deleted",
     life: 3000,
   });
-  PostsStore.dispatch("posts/deletePost", props.postId);
+  store.dispatch("posts/deletePost", props.postId);
 };
 
 const menu = ref();

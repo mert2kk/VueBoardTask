@@ -9,7 +9,7 @@
       />
       <Button v-else label="Edit" icon="pi pi-pencil" @click="editPost" />
     </div>
-    <PostCard v-model="post" />
+    <PostCard v-model:post="post" v-model:comments="comments" />
   </div>
 </template>
 
@@ -22,17 +22,19 @@ import { useStore } from "@/store/useStore";
 
 const route = useRoute();
 const router = useRouter();
-const PostsStore = useStore();
+const store = useStore();
+
 const toast = useToast();
 
-const post = computed(() => PostsStore.state.posts.post!);
+const post = computed(() => store.state.posts.post!);
 const postId = computed(() => route.params.id);
+const comments = computed(() => store.state.comments.comments ?? []);
 
-// URL'ye göre mod belirleniyor
 const isEditMode = computed(() => route.fullPath.includes("/edit"));
 
 onMounted(() => {
-  PostsStore.dispatch("posts/fetchPost", postId.value);
+  store.dispatch("posts/fetchPost", postId.value);
+  store.dispatch("comments/fetchComments", postId.value);
 });
 
 async function editPost() {
@@ -41,7 +43,7 @@ async function editPost() {
 
 async function savePost() {
   try {
-    await PostsStore.dispatch("posts/savePost", post.value);
+    await store.dispatch("posts/savePost", post.value);
     toast.add({ severity: "success", summary: "Saved", life: 2000 });
     router.push(`/posts/${postId.value}`);
   } catch (error) {
