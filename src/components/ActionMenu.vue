@@ -7,7 +7,6 @@
         size="small"
         class="p-button-text"
         @click="toggleMenu"
-        aria-label="Post actions"
       />
       <Menu ref="menu" :model="items" popup />
     </div>

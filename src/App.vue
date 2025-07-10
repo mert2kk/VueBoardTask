@@ -5,7 +5,7 @@
     </header>
 
     <main>
-      <div class="flex flex-col items-center"><Toast /><router-view /></div>
+      <div class="flex flex-col"><Toast /><router-view /></div>
     </main>
   </div>
 </template>
