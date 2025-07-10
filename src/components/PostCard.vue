@@ -6,21 +6,17 @@
     </TabList>
 
     <TabPanel value="published">
-      <h3 class="text-xl mb-2">{{ post.title }}</h3>
+      <h2>{{ post.title }}</h2>
       <p>{{ post.body }}</p>
     </TabPanel>
 
     <TabPanel value="draft">
-      <InputText
-        v-model="post.title"
-        placeholder="Başlık"
-        class="w-full mb-2"
-      />
+      <InputText v-model="post.title" placeholder="Title" class="w-full mb-2" />
       <Textarea
         v-model="post.body"
         rows="10"
         class="w-full"
-        placeholder="İçerik"
+        placeholder="content"
       />
     </TabPanel>
     <CommentList :comments="comments" />

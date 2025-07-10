@@ -1,5 +1,6 @@
 <template>
   <div class="space-y-3">
+    <h4>Comments</h4>
     <Panel v-for="comment in comments" :key="comment.id" :header="comment.name">
       <p class="text-sm text-gray-600 mb-1">
         {{ comment.email }}

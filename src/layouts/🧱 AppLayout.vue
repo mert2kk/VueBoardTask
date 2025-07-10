@@ -4,7 +4,7 @@
       <Menubar :model="items" />
     </div>
 
-    <div class="flex-1 p-[5rem] overflow-y-auto">
+    <div class="flex-1 p-[3rem] overflow-y-auto">
       <RouterView />
     </div>
   </div>
