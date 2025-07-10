@@ -5,9 +5,11 @@
     </header>
 
     <main>
-      <div class="flex flex-col items-center"><router-view /></div>
+      <div class="flex flex-col items-center"><Toast /><router-view /></div>
     </main>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import Toast from "primevue/toast";
+</script>

@@ -6,6 +6,11 @@
         <Column field="userId" header="UserId"></Column>
         <Column field="title" header="Title"></Column>
         <Column field="body" header="Post Content"></Column>
+        <Column header="Actions">
+          <template #body="slotProps">
+            <ActionMenu :postId="slotProps.data.id" />
+          </template>
+        </Column>
       </DataTable>
     </div>
     <div v-else>There is no posts loaded</div>
@@ -18,9 +23,9 @@ import Column from "primevue/column";
 import type { Post } from "@/store/posts/types";
 
 import { defineProps } from "vue";
+import ActionMenu from "./ActionMenu.vue";
 
 defineProps<{
   posts: Post[];
-  mode: "view" | "edit";
 }>();
 </script>

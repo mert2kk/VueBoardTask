@@ -1,17 +1,62 @@
 <template>
   <div class="menu">
-    <button @click="goToDetails">Details</button>
-    <button @click="goToEdit">Edit</button>
-    <button @click="deletePost">Delete</button>
+    <div class="card flex justify-center">
+      <SplitButton
+        icon="pi pi-ellipsis-v"
+        :model="items"
+        severity="secondary"
+        size="small"
+        buttonClass="p-button-text"
+        aria-label="Post actions"
+      />
+    </div>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import SplitButton from "primevue/splitbutton";
+import { useToast } from "primevue/usetoast";
+
+const toast = useToast();
+
 import { useRouter } from "vue-router";
 import { defineProps } from "vue";
 
-const props = defineProps({ postId: Number });
+const props = defineProps<{
+  postId: number;
+}>();
+
 const router = useRouter();
+
+const items = [
+  {
+    label: "Details",
+    command: () => {
+      goToDetails();
+    },
+  },
+  {
+    label: "Edit",
+    command: () => {
+      goToEdit();
+    },
+  },
+  {
+    separator: true,
+  },
+  {
+    label: "Delete",
+    command: () => {
+      toast.add({
+        severity: "warn",
+        summary: "Delete",
+        detail: "Post Deleted",
+        life: 3000,
+      });
+      deletePost();
+    },
+  },
+];
 
 const goToDetails = () => router.push(`/posts/${props.postId}`);
 const goToEdit = () => router.push(`/posts/${props.postId}/edit`);
