@@ -1,15 +1,8 @@
 <template>
-  <div class="flex flex-col items-center">
-    <header>
-      <h1 class="flex flex-col items-center">VueBoard</h1>
-    </header>
-
-    <main>
-      <div class="flex flex-col"><Toast /><router-view /></div>
-    </main>
-  </div>
+  <div><Toast /> <AppLayout /></div>
 </template>
 
 <script setup lang="ts">
 import Toast from "primevue/toast";
+import AppLayout from "./layouts/🧱 AppLayout.vue";
 </script>

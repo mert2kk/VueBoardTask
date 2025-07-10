@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-4">
+  <div>
     <div class="flex justify-end">
       <Button label="Create" icon="pi pi-plus" @click="createNewPost" />
     </div>

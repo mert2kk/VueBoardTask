@@ -3,16 +3,20 @@ import type { RouteRecordRaw } from 'vue-router'
 
 import Home from '@/pages/home-board.vue'
 import PostsPage from '../pages/posts-page.vue'
-import PostDetails from '@/pages/post-page/post-details.vue'
-import PostEdit from '@/pages/post-page/post-draft.vue'
+import PostScreen from '../pages/PostScreen.vue'
+import NotFound from '../pages/not-found.vue'
+import Albums from "../pages/albums-page.vue"
 
 
 
 const routes: Array<RouteRecordRaw> = [
     { path: '/', component: Home },
     { path: '/posts', component: PostsPage },
-    { path: '/posts/:id', component: PostDetails },
-    { path: '/posts/:id/edit', component: PostEdit }
+    { path: '/posts/:id/edit', component: PostScreen },
+    { path: '/posts/:id', component: PostScreen },
+    { path: '/albums', component: Albums },
+    { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }
+
 
 
 ]
