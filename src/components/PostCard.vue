@@ -16,10 +16,12 @@
         v-model="post.body"
         rows="10"
         class="w-full"
-        placeholder="content"
+        placeholder="Content"
+        style="resize: none"
       />
     </TabPanel>
     <CommentList :comments="comments" />
+    <CommentForm />
   </Tabs>
 </template>
 
@@ -36,6 +38,7 @@ import TabPanel from "primevue/tabpanel";
 import type { Post } from "@/store/posts/types";
 import type { Comment } from "@/store/comments/types";
 import CommentList from "./CommentList.vue";
+import CommentForm from "./CommentForm.vue";
 
 const post = defineModel<Post>("post", { required: true });
 const comments = defineModel<Comment[]>("comments", { required: true });
