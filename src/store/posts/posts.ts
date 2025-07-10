@@ -26,6 +26,10 @@ const mutations = {
     },
     addPost(state: PostsState, post: Post) {
         state.posts.push(post)
+    },
+    removePost(state: PostsState, postId: number
+    ) {
+        state.posts = state.posts.filter(post => post.id !== postId);
     }
 }
 
@@ -42,7 +46,15 @@ const actions = {
             const response = await axios.get<Post[]>(`https://jsonplaceholder.typicode.com/posts/${postId}`)
             commit('setPost', response.data)
         } catch (error) {
-            console.error('Error while fetching the posts', error)
+            console.error('Error while fetching the post', error)
+        }
+    },
+    async deletePost({ commit }: ActionContext<PostsState, RootState>, postId: number) {
+        try {
+            await axios.delete<Post[]>(`https://jsonplaceholder.typicode.com/posts/${postId}`)
+            commit('removePost', postId);
+        } catch (error) {
+            console.error('Error while deleting the post', error)
         }
     }
 }

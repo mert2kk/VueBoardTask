@@ -1,66 +1,63 @@
 <template>
   <div class="menu">
     <div class="card flex justify-center">
-      <SplitButton
+      <Button
         icon="pi pi-ellipsis-v"
-        :model="items"
         severity="secondary"
         size="small"
-        buttonClass="p-button-text"
+        class="p-button-text"
+        @click="toggleMenu"
         aria-label="Post actions"
       />
+      <Menu ref="menu" :model="items" popup />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import SplitButton from "primevue/splitbutton";
+import Menu from "primevue/menu";
+import { Button } from "primevue";
 import { useToast } from "primevue/usetoast";
+import { useStore } from "@/store/useStore";
+import { useRouter } from "vue-router";
+import { defineProps, ref } from "vue";
 
 const toast = useToast();
-
-import { useRouter } from "vue-router";
-import { defineProps } from "vue";
+const router = useRouter();
+const PostsStore = useStore();
 
 const props = defineProps<{
   postId: number;
 }>();
 
-const router = useRouter();
+const goToDetails = () => router.push(`/posts/${props.postId}`);
 
+const goToEdit = () => router.push(`/posts/${props.postId}/edit`);
+
+const deletePost = () => {
+  toast.add({
+    severity: "warn",
+    summary: "Delete",
+    detail: "Post Deleted",
+    life: 3000,
+  });
+  PostsStore.dispatch("posts/deletePost", props.postId);
+};
+
+const menu = ref();
 const items = [
-  {
-    label: "Details",
-    command: () => {
-      goToDetails();
-    },
-  },
-  {
-    label: "Edit",
-    command: () => {
-      goToEdit();
-    },
-  },
-  {
-    separator: true,
-  },
+  { label: "View", icon: "pi pi-eye", command: () => goToDetails() },
+  { label: "Edit", icon: "pi pi-pencil", command: () => goToEdit() },
+  { separator: true },
   {
     label: "Delete",
-    command: () => {
-      toast.add({
-        severity: "warn",
-        summary: "Delete",
-        detail: "Post Deleted",
-        life: 3000,
-      });
-      deletePost();
-    },
+    icon: "pi pi-trash",
+    command: () => deletePost(),
+    class: "text-red-600",
   },
 ];
 
-const goToDetails = () => router.push(`/posts/${props.postId}`);
-const goToEdit = () => router.push(`/posts/${props.postId}/edit`);
-const deletePost = () => {
-  console.log(`Deleted post ${props.postId}`);
-};
+function toggleMenu(event: MouseEvent) {
+  menu.value?.toggle(event);
+}
 </script>
