@@ -26,7 +26,7 @@ onMounted(() => {
 const posts = computed<Post[]>(() => store.state.posts.posts!);
 
 async function createNewPost() {
-  const newPostId = await store.dispatch("posts/createEmptyPost");
-  router.push(`/posts/${newPostId}/edit`);
+  // const newPostId = await store.dispatch("posts/createEmptyPost");
+  router.push(`/posts/new`);
 }
 </script>

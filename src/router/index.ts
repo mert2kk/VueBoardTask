@@ -6,6 +6,7 @@ import PostsPage from '../pages/posts-page.vue'
 import PostScreen from '../pages/PostScreen.vue'
 import NotFound from '../pages/not-found.vue'
 import Albums from "../pages/albums-page.vue"
+import NewPost from '../pages/new-post.vue'
 
 
 
@@ -15,6 +16,7 @@ const routes: Array<RouteRecordRaw> = [
     { path: '/posts/:id/edit', component: PostScreen },
     { path: '/posts/:id', component: PostScreen },
     { path: '/albums', component: Albums },
+    { path: '/posts/new', component: NewPost },
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }
 
 
