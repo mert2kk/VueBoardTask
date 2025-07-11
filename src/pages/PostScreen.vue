@@ -9,7 +9,12 @@
       />
       <Button v-else label="Edit" icon="pi pi-pencil" @click="editPost" />
     </div>
-    <PostCard v-model:post="post" v-model:comments="comments" />
+    <PostCard
+      v-if="post"
+      v-model:post="post"
+      v-model:comments="comments"
+      v-model:comment="comment"
+    />
   </div>
 </template>
 
@@ -17,8 +22,9 @@
 import PostCard from "@/components/PostCard.vue";
 import { Button, useToast } from "primevue";
 import { useRoute, useRouter } from "vue-router";
-import { computed, onMounted } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useStore } from "@/store/useStore";
+import type { Comment } from "@/store/comments/types";
 
 const route = useRoute();
 const router = useRouter();
@@ -26,9 +32,16 @@ const store = useStore();
 
 const toast = useToast();
 
-const post = computed(() => store.state.posts.post!);
+const post = computed(() => store.state.posts.post);
 const postId = computed(() => route.params.id);
 const comments = computed(() => store.state.comments.comments ?? []);
+const comment = ref<Comment>({
+  postId: Number(route.params.id),
+  id: undefined,
+  name: "",
+  email: "",
+  body: "",
+});
 
 const isEditMode = computed(() => route.fullPath.includes("/edit"));
 
@@ -42,6 +55,8 @@ async function editPost() {
 }
 
 async function savePost() {
+  if (!post.value) return;
+
   try {
     await store.dispatch("posts/savePost", post.value);
     toast.add({ severity: "success", summary: "Saved", life: 2000 });

@@ -7,6 +7,8 @@ import PostScreen from '../pages/PostScreen.vue'
 import NotFound from '../pages/not-found.vue'
 import Albums from "../pages/albums-page.vue"
 import NewPost from '../pages/new-post.vue'
+import store from "@/store";
+
 
 
 
@@ -27,5 +29,15 @@ const router = createRouter({
     history: createWebHistory(),
     routes
 })
+
+router.beforeEach((to, from, next) => {
+    const isAuthenticated = store.state.users.currentUser;
+
+    if (!isAuthenticated && to.path !== "/") {
+        next("/");
+    } else {
+        next();
+    }
+});
 
 export default router

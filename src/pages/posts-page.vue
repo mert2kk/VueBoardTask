@@ -23,14 +23,17 @@ const currentUser = computed(() => store.state.users.currentUser);
 
 onMounted(() => {
   store.dispatch("users/fetchUsers");
-  store.dispatch("posts/fetchPosts", currentUser.value?.id);
 });
 
-watch(currentUser, (newVal) => {
-  if (newVal?.id) {
-    store.dispatch("posts/fetchPosts", newVal.id);
-  }
-});
+watch(
+  currentUser,
+  (newVal) => {
+    if (newVal?.id) {
+      store.dispatch("posts/fetchPosts", newVal.id);
+    }
+  },
+  { immediate: true }
+);
 
 const posts = computed<Post[]>(() => store.state.posts.posts!);
 

@@ -21,7 +21,7 @@
       />
     </TabPanel>
     <CommentList :comments="comments" />
-    <CommentForm v-model:comment="comment" @submit="addNewComment" />
+    <CommentForm :comment="comment" @submit="addNewComment" />
   </Tabs>
 </template>
 
@@ -42,6 +42,7 @@ import { Textarea, InputText, useToast } from "primevue";
 
 const post = defineModel<Post>("post", { required: true });
 const comments = defineModel<Comment[]>("comments", { required: true });
+const comment = defineModel<Comment>("comment", { required: true });
 
 const route = useRoute();
 const router = useRouter();
@@ -50,14 +51,6 @@ const toast = useToast();
 const activeTab = ref<"published" | "draft">("published");
 
 const isEditMode = computed(() => activeTab.value === "draft");
-
-const comment = ref<Comment>({
-  postId: post?.value?.id!,
-  id: undefined,
-  name: "",
-  email: "",
-  body: "",
-});
 
 watch(
   () => route.fullPath,

@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen">
+  <div class="h-screen flex flex-col">
     <div class="w-full shadow-md px-6 py-3 flex justify-between items-center">
       <Menubar :model="items" class="flex-1 mr-4 border-none shadow-none" />
       <UserDropdown />
