@@ -1,25 +1,23 @@
 <template>
   <Textarea
     v-model="comment.name"
-    rows="10"
+    rows="1"
     class="w-full m-8"
-    placeholder="share your comment"
+    placeholder="Name"
     style="resize: none"
   />
-
   <Textarea
     v-model="comment.email"
-    rows="10"
+    rows="1"
     class="w-full m-8"
-    placeholder="share your comment"
+    placeholder="E-mail"
     style="resize: none"
   />
-
   <Textarea
     v-model="comment.body"
     rows="10"
     class="w-full m-8"
-    placeholder="share your comment"
+    placeholder="Share your comment"
     style="resize: none"
   />
 

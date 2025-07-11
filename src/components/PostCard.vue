@@ -80,7 +80,6 @@ const addNewComment = async (comment: Comment) => {
   try {
     await store.dispatch("comments/createComment", comment);
     toast.add({ severity: "success", summary: "Comment Added", life: 2000 });
-    // store.commit("comments/resetComment");
   } catch (error) {
     toast.add({ severity: "error", summary: "Sharing is failed", life: 2000 });
     console.error("Save error", error);
