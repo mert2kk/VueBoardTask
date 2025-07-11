@@ -27,6 +27,7 @@ const submitPost = async () => {
     await store.dispatch("posts/createPost", post.value);
     toast.add({ severity: "success", summary: "Created", life: 2000 });
     router.push(`/posts`);
+    store.commit("posts/resetPost");
   } catch (error) {
     toast.add({ severity: "error", summary: "Creation is failed", life: 2000 });
     console.error("Save error", error);

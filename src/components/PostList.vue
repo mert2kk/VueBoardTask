@@ -13,7 +13,7 @@
         </Column>
       </DataTable>
     </div>
-    <div v-else>There is no posts loaded</div>
+    <div v-else>There is no posts loaded yet</div>
   </section>
 </template>
 

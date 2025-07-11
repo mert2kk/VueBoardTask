@@ -21,16 +21,15 @@
       />
     </TabPanel>
     <CommentList :comments="comments" />
-    <CommentForm />
+    <CommentForm v-model:comment="comment" @submit="addNewComment" />
   </Tabs>
 </template>
 
 <script setup lang="ts">
+import store from "@/store";
 import { defineModel } from "vue";
 import { ref, watch, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import InputText from "primevue/inputtext";
-import Textarea from "primevue/textarea";
 import Tabs from "primevue/tabs";
 import TabList from "primevue/tablist";
 import Tab from "primevue/tab";
@@ -39,16 +38,26 @@ import type { Post } from "@/store/posts/types";
 import type { Comment } from "@/store/comments/types";
 import CommentList from "./CommentList.vue";
 import CommentForm from "./CommentForm.vue";
+import { Textarea, InputText, useToast } from "primevue";
 
 const post = defineModel<Post>("post", { required: true });
 const comments = defineModel<Comment[]>("comments", { required: true });
 
 const route = useRoute();
 const router = useRouter();
+const toast = useToast();
 
 const activeTab = ref<"published" | "draft">("published");
 
 const isEditMode = computed(() => activeTab.value === "draft");
+
+const comment = ref<Comment>({
+  postId: post?.value?.id!,
+  id: undefined,
+  name: "",
+  email: "",
+  body: "",
+});
 
 watch(
   () => route.fullPath,
@@ -66,4 +75,15 @@ watch(activeTab, (newTab) => {
     router.replace(`/posts/${postId}`);
   }
 });
+
+const addNewComment = async (comment: Comment) => {
+  try {
+    await store.dispatch("comments/createComment", comment);
+    toast.add({ severity: "success", summary: "Comment Added", life: 2000 });
+    // store.commit("comments/resetComment");
+  } catch (error) {
+    toast.add({ severity: "error", summary: "Sharing is failed", life: 2000 });
+    console.error("Save error", error);
+  }
+};
 </script>

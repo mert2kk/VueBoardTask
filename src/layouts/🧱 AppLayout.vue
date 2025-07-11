@@ -1,19 +1,33 @@
 <template>
   <div class="h-screen">
-    <div>
-      <Menubar :model="items" />
+    <div class="w-full shadow-md px-6 py-3 flex justify-between items-center">
+      <Menubar :model="items" class="flex-1 mr-4 border-none shadow-none" />
+      <UserDropdown />
     </div>
 
-    <div class="flex-1 p-[3rem] overflow-y-auto">
+    <div v-if="!currentUser">
+      <Message severity="warn" :closable="false">
+        Please sign in to continue.
+      </Message>
+    </div>
+
+    <div v-else class="flex-1 p-[3rem] overflow-y-auto">
       <RouterView />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import Menubar from "primevue/menubar";
 import { useRouter } from "vue-router";
+import { useStore } from "@/store/useStore";
+
+import UserDropdown from "@/components/UserDropdown.vue";
+import Message from "primevue/message";
+
+const store = useStore();
+const currentUser = computed(() => store.state.users.currentUser);
 
 const router = useRouter();
 

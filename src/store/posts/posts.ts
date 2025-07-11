@@ -30,13 +30,21 @@ const mutations = {
     removePost(state: PostsState, postId: number
     ) {
         state.posts = state.posts.filter(post => post.id !== postId);
+    },
+    resetPost(state: PostsState) {
+        state.post = {
+            userId: undefined,
+            id: undefined,
+            title: '',
+            body: ''
+        }
     }
 }
 
 const actions = {
-    async fetchPosts({ commit }: ActionContext<PostsState, RootState>) {
+    async fetchPosts({ commit }: ActionContext<PostsState, RootState>, userId: number) {
         try {
-            const response = await axios.get<Post[]>('https://jsonplaceholder.typicode.com/posts')
+            const response = await axios.get<Post[]>(`https://jsonplaceholder.typicode.com/posts?userId=${userId}`)
             commit('setPosts', response.data)
         } catch (error) {
             console.error('Error while fetching the posts', error)
@@ -67,15 +75,16 @@ const actions = {
             throw error;
         }
     },
-    async createPost({ commit, dispatch }: ActionContext<PostsState, RootState>, post: Post) {
+    async createPost({ commit, dispatch, rootState }: ActionContext<PostsState, RootState>, post: Post) {
         try {
+            const userId = rootState.users.currentUser?.id ?? 1;
             const newPost = {
                 ...post,
-                userId: 1,
+                userId: userId,
             };
             const response = await axios.post(`https://jsonplaceholder.typicode.com/posts`, newPost);
             commit("addPost", response.data);
-            dispatch("fetchPosts");
+
         } catch (error) {
             console.error("Save error", error);
             throw error;

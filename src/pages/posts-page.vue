@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h3>{{ currentUser?.name }}’s Posts</h3>
     <div class="flex justify-end">
       <Button label="Create" icon="pi pi-plus" @click="createNewPost" />
     </div>
@@ -10,17 +11,25 @@
 <script setup lang="ts">
 import PostList from "@/components/PostList.vue";
 import { Button } from "primevue";
-import { onMounted, computed } from "vue";
+import { onMounted, computed, watch } from "vue";
 import { useStore } from "@/store/useStore";
 import { useRouter } from "vue-router";
-
 import type { Post } from "@/store/posts/types";
 
 const store = useStore();
 const router = useRouter();
 
+const currentUser = computed(() => store.state.users.currentUser);
+
 onMounted(() => {
-  store.dispatch("posts/fetchPosts");
+  store.dispatch("users/fetchUsers");
+  store.dispatch("posts/fetchPosts", currentUser.value?.id);
+});
+
+watch(currentUser, (newVal) => {
+  if (newVal?.id) {
+    store.dispatch("posts/fetchPosts", newVal.id);
+  }
 });
 
 const posts = computed<Post[]>(() => store.state.posts.posts!);
