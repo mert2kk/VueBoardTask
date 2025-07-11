@@ -1,21 +1,35 @@
 <!-- NewPostPage.vue -->
 <template>
-  <form @submit.prevent="submitPost">
-    <InputText placeholder="Title" class="w-full mb-2" />
-    <Textarea
-      rows="10"
-      class="w-full"
-      placeholder="Content"
-      style="resize: none"
-    />
-    <Button type="submit">Add</Button>
-  </form>
+  <InputText placeholder="Title" class="w-full mb-2" v-model="post.title" />
+  <Textarea
+    rows="10"
+    class="w-full"
+    placeholder="Content"
+    style="resize: none"
+    v-model="post.body"
+  />
+  <Button type="submit" @click="submitPost">Add</Button>
 </template>
 
 <script setup lang="ts">
-import { Button, Textarea, InputText } from "primevue";
-// import { defineModel } from "vue";
-// import type { Post } from "@/store/posts/types";
+import store from "@/store";
+import { Button, Textarea, InputText, useToast } from "primevue";
+import { useRouter } from "vue-router";
+import { computed } from "vue";
 
-const submitPost = async () => {};
+const toast = useToast();
+const router = useRouter();
+
+const post = computed(() => store.state.posts.post!);
+
+const submitPost = async () => {
+  try {
+    await store.dispatch("posts/createPost", post.value);
+    toast.add({ severity: "success", summary: "Created", life: 2000 });
+    router.push(`/posts`);
+  } catch (error) {
+    toast.add({ severity: "error", summary: "Creation is failed", life: 2000 });
+    console.error("Save error", error);
+  }
+};
 </script>

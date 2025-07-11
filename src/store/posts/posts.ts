@@ -66,6 +66,20 @@ const actions = {
             console.error("Save error", error);
             throw error;
         }
+    },
+    async createPost({ commit, dispatch }: ActionContext<PostsState, RootState>, post: Post) {
+        try {
+            const newPost = {
+                ...post,
+                userId: 1,
+            };
+            const response = await axios.post(`https://jsonplaceholder.typicode.com/posts`, newPost);
+            commit("addPost", response.data);
+            dispatch("fetchPosts");
+        } catch (error) {
+            console.error("Save error", error);
+            throw error;
+        }
     }
 }
 
