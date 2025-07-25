@@ -21,8 +21,6 @@ const routes: Array<RouteRecordRaw> = [
     { path: '/posts/new', component: NewPost },
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }
 
-
-
 ]
 
 const router = createRouter({

@@ -30,6 +30,7 @@ const actions = {
         }
     },
     selectUser({ commit }: ActionContext<UsersState, RootState>, user: User) {
+        localStorage.setItem('currentUser', JSON.stringify(user));
         commit('setCurrentUser', user)
     }
 }

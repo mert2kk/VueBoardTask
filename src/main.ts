@@ -28,3 +28,8 @@ app.use(PrimeVue, {
 });
 
 app.mount('#app')
+
+const savedUser = localStorage.getItem('currentUser');
+if (savedUser) {
+    store.commit('users/setCurrentUser', JSON.parse(savedUser));
+}
